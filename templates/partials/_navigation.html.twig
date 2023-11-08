@@ -3,7 +3,7 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.html">
-            <img src="images/logo.png" alt="">
+            <img src={{asset("images/logo.png")}} alt="">
             <span>
               Petology
             </span>
@@ -39,10 +39,15 @@
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>
             </div>
-            <div class="quote_btn-container  d-flex justify-content-center">
-              <a href="">
-                Call: +01 1234567890
-              </a>
+            <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav">
+              {% if app.user %}
+                  <li class="nav-item"><a class="btn btn-primary" href="{{ path('logout') }}"><i class="fa fa-sign-out sr-icons"></i> {{ app.user.name }} - Log out</a></li>
+                {% else %}
+                  <li class="nav-item {{ (app.request.attributes.get('_route') == 'register')  ? 'active': ''}} "><a class="btn" href="{{ path('register') }}"><i class="fa fa-user-secret sr-icons"></i> Register</a></li>
+                  <li class="nav-item {{ (app.request.attributes.get('_route') == 'login')  ? 'active': ''}} lien"><a class="btn btn-primary" href="{{ path('login') }}"><i class="fa fa-sign-in sr-icons"></i> Login</a></li>
+                {% endif %}
+                </ul>
             </div>
           </div>
         </nav>

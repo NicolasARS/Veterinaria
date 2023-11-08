@@ -18,7 +18,7 @@ class ContactFormType extends AbstractType
             ->add('phoneNumber')
             ->add('email', EmailType::class)
             ->add('message')
-            ->add('Send', SubmitType::class, array('label' => 'Send'));
+            ->add('Send', SubmitType::class, array('label' => 'Send Message'));
         ;
     }
 
