@@ -30,7 +30,7 @@
 			</td>
 			<td>
 			{% if is_granted('ROLE_ADMIN') %}
-	    <a href="{{ path('delete_category', {'id' :  category.id})}}" class="btn">Delete Category</a>
+	    <a href="{{ path('delete_category', {'id' :  category.id})}}" class="btn btn-primary">Delete Category</a>
 		</td>
         {% endif %}
 		</tr>

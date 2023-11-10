@@ -56,13 +56,27 @@ public function images(ManagerRegistry $doctrine, Request $request, SluggerInter
         $entityManager = $doctrine->getManager();    
         $entityManager->persist($image);
         $entityManager->flush();
+        return $this->redirectToRoute('add_images', []);
     }
     return $this->render('admin/images.html.twig', array(
                 'form' => $form->createView(),
                 'image' => $image,
                 'images' => $images
             ));
-}
+    }
+
+    #[Route('/admin/images/delete/{id}', name: 'delete_image')]
+    public function deleteImage(ManagerRegistry $doctrine, $id): Response{
+        $entityManager = $doctrine->getManager();
+        $repositorio = $doctrine->getRepository(Image::class);
+        $image = $repositorio->find($id);
+        if ($image){
+                $entityManager->remove($image);
+                $entityManager->flush();
+                return $this->redirectToRoute('add_images', []);
+        }else
+            return $this->render('images.html.twig', ['image' => null] ,);
+    }
 
     #[Route('/admin/categories', name: 'app_categories')]
     public function categories(ManagerRegistry $doctrine, Request $request): Response
@@ -87,8 +101,8 @@ public function images(ManagerRegistry $doctrine, Request $request, SluggerInter
     ));
 }
 
-    #[Route('/admin/categories/{id}', name: 'delete_category')]
-    public function delete(ManagerRegistry $doctrine, $id): Response{
+    #[Route('/admin/categories/delete/{id}', name: 'delete_category')]
+    public function deleteCategory(ManagerRegistry $doctrine, $id): Response{
         $entityManager = $doctrine->getManager();
         $repositorio = $doctrine->getRepository(Category::class);
         $category = $repositorio->find($id);
@@ -97,7 +111,7 @@ public function images(ManagerRegistry $doctrine, Request $request, SluggerInter
                 $entityManager->flush();
                 return $this->redirectToRoute('app_categories', []);
         }else
-            return $this->render('categories.html.twig', ['category' => null]);
+            return $this->render('admin/categories.html.twig', ['category' => null]);
     }
 
 

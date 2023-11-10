@@ -26,6 +26,7 @@
 			<th scope="col">NumViews</th>
 			<th scope="col">NumDownloads</th>
 			<th scope="col">Category</th>
+			<th scope="col">Delete</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -47,6 +48,11 @@
 			<td>
 				{{ image.category.id }}
 			</td>
+			<td>
+			{% if is_granted('ROLE_ADMIN') %}
+	    	<a href="{{ path('delete_image', {'id' :  image.id})}}" class="btn btn-primary">Delete Image</a>
+			</td>
+        {% endif %}
 		</tr>
 		{% endfor %}
 		</tbody>
