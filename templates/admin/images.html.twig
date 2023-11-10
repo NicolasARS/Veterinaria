@@ -3,10 +3,55 @@
 {% block body %}
 <!-- Principal Content Start -->
    <div id="images">
-   	  <div class="container">
-   	    <div class="col-xs-12 col-sm-8 col-sm-push-2">
-       	   <h1>Images</h1>
+   	  <div class="container layout_padding">
+   	    <div class="col-xs-12 col-sm-push-2">
+       	   <h1 class="custom_heading">Ima<span>ges</span></h1>
+		   <h3 class="custom_subheading">Upload a new image</h3>
+		   {{ form_start(form) }}
+			{{ form_row(form.file,  {'attr': {'class':'form-control'}}) }}<br>
+            {{ form_row(form.numLikes,  {'attr': {'class':'form-control'}}) }}
+			{{ form_row(form.numViews,  {'attr': {'class':'form-control'}}) }}
+			{{ form_row(form.numDownloads,  {'attr': {'class':'form-control'}}) }}
+			{{ form_row(form.category,  {'attr': {'class':'form-control'}}) }}<br>
+			{{ form_row(form.Send,  {'attr': {'class':'btn btn-lg btn-primary'}}) }}
+			{{ form_end(form) }}
        	   <hr>
+		   <div>
+	<table class="table">
+		<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Image</th>
+			<th scope="col">NumLikes</th>
+			<th scope="col">NumViews</th>
+			<th scope="col">NumDownloads</th>
+			<th scope="col">Category</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for image in images %}
+		<tr>
+			<th scope="row">{{ image.id }}</th>
+			<td>
+				<img src="{{ asset('images/' ~ image.file) }}">
+			</td>
+			<td>
+				{{ image.numLikes }}
+			</td>
+			<td>
+				{{ image.numViews }}
+			</td>
+			<td>
+				{{ image.numDownloads }}
+			</td>
+			<td>
+				{{ image.category.id }}
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
        	</div>   
    	  </div>
    </div>
