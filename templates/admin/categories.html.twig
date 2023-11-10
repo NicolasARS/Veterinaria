@@ -18,6 +18,7 @@
 		<tr>
 			<th scope="col">#</th>
 			<th scope="col">Name</th>
+			<th scope="col">Delete</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -27,6 +28,11 @@
 			<td>
 				{{ category.name }}
 			</td>
+			<td>
+			{% if is_granted('ROLE_ADMIN') %}
+	    <a href="{{ path('delete_category', {'id' :  category.id})}}" class="btn">Delete Category</a>
+		</td>
+        {% endif %}
 		</tr>
 		{% endfor %}
 		</tbody>

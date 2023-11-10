@@ -79,13 +79,28 @@ public function images(ManagerRegistry $doctrine, Request $request, SluggerInter
         $entityManager = $doctrine->getManager();    
         $entityManager->persist($category);
         $entityManager->flush();
+        return $this->redirectToRoute('app_categories', []);
     }
     return $this->render('admin/categories.html.twig', array(
         'form' => $form->createView(),
         'categories' => $categories   
     ));
-
 }
+
+    #[Route('/admin/categories/{id}', name: 'delete_category')]
+    public function delete(ManagerRegistry $doctrine, $id): Response{
+        $entityManager = $doctrine->getManager();
+        $repositorio = $doctrine->getRepository(Category::class);
+        $category = $repositorio->find($id);
+        if ($category){
+                $entityManager->remove($category);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_categories', []);
+        }else
+            return $this->render('categories.html.twig', ['category' => null]);
+    }
+
+
     public function adminDashboard(): Response
 {
     $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -95,5 +110,6 @@ public function images(ManagerRegistry $doctrine, Request $request, SluggerInter
     
     new Response("Sí que puedes entrar");
 }
-}
 
+
+}
